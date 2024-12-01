@@ -1,6 +1,7 @@
 # AOC2024 day 1
 import os
 from read_input import get_input
+from collections import Counter
 
 class Locations:
     def __init__(self, input_data_path):
@@ -10,40 +11,20 @@ class Locations:
         self.second_ids = []
     
     def parse_data(self):
-        for line in self.input_data:
-            first_loc_id, second_loc_id = line.split()
-            self.first_ids.append(int(first_loc_id))
-            self.second_ids.append(int(second_loc_id))
+        self.first_ids, self.second_ids = zip(*(map(int, line.split()) for line in self.input_data))
     
     def compute_distance(self):
         self.parse_data()
 
-        total_distance = 0
-        while self.first_ids and self.second_ids:
-            first_min = min(self.first_ids)
-            self.first_ids.remove(first_min)
-
-            second_min = min(self.second_ids)
-            self.second_ids.remove(second_min)
-
-            total_distance += abs(first_min - second_min)
-
-        return total_distance
-
-    def count_id_frequency(self, lid, locations):
-        count = 0
-        for location in locations:
-            if lid == location:
-                count += 1
-        return count
+        fst_ids = sorted(self.first_ids)
+        snd_ids = sorted(self.second_ids)
+        
+        return sum(abs(fst - snd) for fst, snd in zip(fst_ids, snd_ids))
 
     def compute_similarity_score(self):
         self.parse_data()
 
-        total_score = 0
-        for location in self.first_ids:
-            total_score += location * self.count_id_frequency(location, self.second_ids)
-
-        return total_score
+        second_id_counts = Counter(self.second_ids)
+        return sum(location * second_id_counts.get(location, 0) for location in self.first_ids)
         
 
