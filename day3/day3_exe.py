@@ -5,6 +5,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from corrupted_memory import CorruptedMemory
+from corrupted_memory_np import CorruptedMemoryNumpy
 
 if __name__ == "__main__":
     
@@ -21,4 +22,9 @@ if __name__ == "__main__":
 
     corrupted_memory_real_2 = CorruptedMemory("input_2.txt")
     print("Uncorrupted instructions real 2 sum:" + str(corrupted_memory_real_2.compute_uncorrupted_sum_new()))
+
+    # numpy
+
+    corrupted_memory_real_numpy = CorruptedMemoryNumpy("input_2.txt")
+    print("Uncorrupted instructions read numpy 2 sum: " + str(corrupted_memory_real_numpy.compute_uncorrupted_sum_new()))
      
