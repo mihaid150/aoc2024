@@ -1,5 +1,4 @@
 import os
-import re
 from read_input import get_input
 
 
